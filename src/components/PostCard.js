@@ -3,12 +3,24 @@ import {Link} from "react-router-dom";
 import {deletePost} from "../services/postService";
 import {useStateContext} from "../context/ContexProvider";
 
+/**
+ * @description       Page que actua como inicio para listar nuestros usuarios
+ * @param post        Props con el post actual generado en la tarjeta
+ */
 const PostCard = ({post}) => {
 	const {setEdit, onDelete, setCurrentPost, setModalOpen} = useStateContext()
+	/**
+	 * @method handleDelete
+	 * @description Elimina el post actual en la API y el Context
+	 */
 	const handleDelete = async (id) => {
 		await deletePost(id)
 		onDelete(id)
 	}
+	/**
+	 * @method handleUpdate
+	 * @description Recibe el post actual y setea su información para el modal con formulario
+	 */
 	const handleUpdate = async (post) => {
 		setEdit(true)
 		setCurrentPost(post)
@@ -23,12 +35,12 @@ const PostCard = ({post}) => {
 				<h2 className="card-title">{post.title}</h2>
 				<p className="truncate w-72">{post.body}</p>
 				<div className="card-actions justify-center">
-					<Link className="btn btn-primary" to={'post/' + post.id}>Leer post</Link>
-					<label htmlFor="my-modal-3" data-testid={`postEdit-${post.id}`} className="btn btn-outline btn-secondary"
+					<Link className="btn btn-primary" to={'post/' + post._id}>Leer post</Link>
+					<label htmlFor="my-modal-3" data-testid={`postEdit`} className="btn btn-outline btn-secondary"
 					        onClick={() => handleUpdate(post)}>Editar
 					</label>
-					<button data-testid={`postDelete-${post.id}`} className="btn btn-outline btn-accent"
-					        onClick={() => handleDelete(post.id)}>Eliminar
+					<button data-testid={`postDelete`} className="btn btn-outline btn-accent"
+					        onClick={() => handleDelete(post._id)}>Eliminar
 					</button>
 				</div>
 			</div>

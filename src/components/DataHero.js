@@ -1,5 +1,9 @@
 import React from 'react';
 
+/**
+ * @description       Componente que se renderiza cuando no existe data
+ * @param title       Titulo basado en que page se encuentre el componente
+ */
 const DataHero = ({title}) => {
 	return (
 		<div className="hero min-h-screen bg-base-100">

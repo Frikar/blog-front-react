@@ -3,6 +3,12 @@ import {useStateContext} from "../context/ContexProvider";
 import {createPost, updatePost} from "../services/postService";
 import toast from 'react-hot-toast';
 
+
+/**
+ * @description       Formulario de añadir y editar
+ * @param post        Props con el post actual generado en la tarjeta
+ * @param userId      Props con del usuario desde donde se crea o edita
+ */
 const PostForm = ({userId, post}) => {
 	const {postsItems, setPostsItems, edit, onUpdate, userList, formComplete} = useStateContext()
 	const titleEl = useRef()
@@ -15,6 +21,11 @@ const PostForm = ({userId, post}) => {
 		}
 	}, [])
 
+	/**
+	 * @method handleSubmit
+	 * @description Se encarga de enviar el formulario y luego llama a los metodos necesarios
+	 */
+
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		const {value: title} = titleEl.current
@@ -23,7 +34,7 @@ const PostForm = ({userId, post}) => {
 
 		const postObj = {title, body, userId};
 		if (edit) {
-			const res = await updatePost(postObj, post.id)
+			const res = await updatePost(postObj, post._id)
 			onUpdate(res)
 		} else {
 			const res = await createPost(postObj)
@@ -33,12 +44,21 @@ const PostForm = ({userId, post}) => {
 		clearInput()
 	}
 
+	/**
+	 * @method handleUpdate
+	 * @description Cambia los valores de las referencias a los del post actual
+	 */
+
 	const handleUpdate = async (post) => {
 		titleEl.current.value = post.title
 		bodyEl.current.value = post.body
 		userIdEl.current.value = post.userId
 	}
 
+	/**
+	 * @method clearInput
+	 * @description Limpia las referencias y los state del context modificados
+	 */
 	const clearInput = () => {
 		titleEl.current.value = ""
 		bodyEl.current.value = ""
@@ -67,10 +87,10 @@ const PostForm = ({userId, post}) => {
 					<label className="label">
 						<span className="label-text">Usuario</span>
 					</label>
-					<select name="userId" ref={userIdEl} className="select select-bordered" defaultValue={userId}>
+					<select data-testid="selectUser" name="userId" ref={userIdEl} className="select select-bordered" defaultValue={userId}>
 						<option value={0} disabled>Selecciona un usuario</option>
 						{userList.map((user) => (
-							<option value={user.id} key={user.id} disabled={userId !== user.id}>{user.name}</option>
+							<option value={user._id} key={user._id} disabled={userId !== user._id}>{user.name}</option>
 						))}
 					</select>
 				</div>

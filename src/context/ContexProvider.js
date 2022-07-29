@@ -9,21 +9,30 @@ export const ContextProvider = ({children}) => {
 	const [edit, setEdit] = useState(false)
 	const [modalOpen, setModalOpen] = useState(false)
 	const [userList, setUserList] = useState([])
+
+	/**
+	 * @description      Elimino del context el post basado en su id
+	 */
 	const onDelete = (id) => {
-		setPostsItems((items) => items.filter((item, index) => item.id !== id));
+		setPostsItems((items) => items.filter((item) => item._id !== id));
 		toast.error('Post eliminado');
 	}
 
+	/**
+	 * @description      Limpio el context y cierro el modal
+	 */
 	const formComplete = () => {
 		setEdit(false)
 		setCurrentPost({})
 		setModalOpen(false)
 	}
 
+	/**
+	 * @description      Realizo el update del post en mi context
+	 */
 	const onUpdate = (res) => {
-		setCurrentPost(res)
 		const updatedPost = postsItems.map((post) => {
-			if (post.id === res.id) {
+			if (post._id === res._id) {
 				return {
 					...post,
 					title: res.title,

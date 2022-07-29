@@ -3,7 +3,10 @@ import {useStateContext} from "../context/ContexProvider";
 import {getUsers} from "../services/userService";
 import {DataHero, UserCard} from "../components";
 
-const Users = ({userId}) => {
+/**
+ * @description                Page que actua como inicio para listar nuestros usuarios
+ */
+const Users = () => {
 	const {setUserList, userList} = useStateContext()
 
 	useEffect(() => {
@@ -24,9 +27,9 @@ const Users = ({userId}) => {
 				<DataHero title={"usuarios"}/>
 			)
 			}
-			<div className="flex flex-wrap mx-auto gap-6 justify-center mb-10">
+			<div className="flex flex-wrap mx-auto gap-6 justify-center mb-10 min-h-screen">
 				{userList.map((user) => (
-					<UserCard user={user} key={user.id}/>
+					<UserCard user={user} key={user._id}/>
 				))}
 			</div>
 		</div>

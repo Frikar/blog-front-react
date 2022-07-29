@@ -3,7 +3,9 @@ import { useParams } from "react-router-dom";
 import {getPost} from "../services/postService";
 import {UserDetail} from "../components";
 
-
+/**
+ * @description       Page que muestra el detalle del post seleccionado y su usuario
+ */
 const PostDetail = () => {
 	const [postData, setPostData] = useState(null);
 	const { id } = useParams();

@@ -1,14 +1,16 @@
+const apiUrl = process.env.REACT_APP_API_URL
+
 export const getUser = async (id) => {
-	const request = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
+	const request = await fetch(`${apiUrl}/users/${id}`)
 	return await request.json()
 }
 
 export const getUsers = async () => {
-	const request = await fetch(`https://jsonplaceholder.typicode.com/users`)
+	const request = await fetch(`${apiUrl}/users/`)
 	return await request.json()
 }
 
 export const getUserPosts = async (id) => {
-	const request = await fetch(`https://jsonplaceholder.typicode.com/users/${id}/posts`)
+	const request = await fetch(`${apiUrl}/users/${id}/posts`)
 	return await request.json()
 }

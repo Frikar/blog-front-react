@@ -1,22 +1,24 @@
 
+const apiUrl = process.env.REACT_APP_API_URL
+
 export const getPosts = async () => {
-	const request = await fetch('https://jsonplaceholder.typicode.com/posts')
+	const request = await fetch(`${apiUrl}/posts/`)
 	return await request.json()
 }
 
 export const getPost = async (id) => {
-	const request = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+	const request = await fetch(`${apiUrl}/posts/${id}`)
 	return await request.json()
 }
 
 export const deletePost = async (id) => {
-	await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+	await fetch(`${apiUrl}/posts/${id}`, {
 		method: 'DELETE',
 	});
 }
 
 export const createPost = async (obj) => {
-	const request = await fetch('https://jsonplaceholder.typicode.com/posts', {
+	const request = await fetch(`${apiUrl}/posts/`, {
 		method: 'POST',
 		body: JSON.stringify(obj),
 		headers: {
@@ -27,7 +29,7 @@ export const createPost = async (obj) => {
 }
 
 export const updatePost = async (obj, id) => {
-	const request = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+	const request = await fetch(`${apiUrl}/posts/${id}`, {
 		method: 'PATCH',
 		body: JSON.stringify(obj),
 		headers: {

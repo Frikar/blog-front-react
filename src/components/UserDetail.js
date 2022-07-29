@@ -2,6 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {getUser} from "../services/userService";
 import {Link} from "react-router-dom";
 
+/**
+ * @description       Componente que muestra un avatar e información del usuario asociado al post actual
+ * @param userId      Props que trae el userId del post actual
+ */
 const UserDetail = ({userId}) => {
 	const [userData, setUserData] = useState({})
 
@@ -26,7 +30,7 @@ const UserDetail = ({userId}) => {
 			</div>
 			<h3 className="text-3xl">{userData.name}</h3>
 			<a className="link-hover text-secondary text-xl mb-4" href={`mailto:${userData.email}`}>{userData.email}</a>
-			<Link to={'/' + userData.id} className="btn w-36 btn-primary">Ver más</Link>
+			<Link to={'/' + userData._id} className="btn w-36 btn-primary">Ver más</Link>
 		</div>
 	)
 		;

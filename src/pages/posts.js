@@ -4,6 +4,9 @@ import {useStateContext} from "../context/ContexProvider";
 import {Link, useParams} from "react-router-dom";
 import {DataHero, PostCard, PostForm} from "../components";
 
+/**
+ * @description       Page que muestra todos los posts asociados a un usuario
+ */
 const Posts = () => {
 	const {postsItems, setPostsItems, edit, setUserList, modalOpen, setModalOpen, currentPost} = useStateContext()
 	const [userData, setUserData] = useState({})
@@ -29,14 +32,16 @@ const Posts = () => {
 				<h1 className="md:text-4xl text-2xl text-primary-content font-bold mt-4">Posts
 					de <Link className="link-hover text-secondary" to={`/`}>{userData.name}</Link></h1>
 			</div>
-			<label data-testid="create-button" htmlFor="my-modal-3" className="btn btn-wide btn-primary mb-4" onClick={() => setModalOpen(true)}>Crear Post</label>
+			<div className="flex flex-wrap justify-center w-full mb-4">
+				<label data-testid="create-button" htmlFor="my-modal-3" className="btn btn-wide btn-primary" onClick={() => setModalOpen(true)}>Crear Post</label>
+			</div>
 			{postsItems.length === 0 && (
 				<DataHero title={"post"}/>
 			)
 			}
 			<div className="flex flex-wrap mx-auto gap-6 justify-center mb-10">
 				{postsItems?.map((item) => (
-					<PostCard post={item} key={item.id}/>
+					<PostCard post={item} key={item._id}/>
 				))}
 			</div>
 			{modalOpen && (
@@ -46,7 +51,7 @@ const Posts = () => {
 						<div className="modal-box relative">
 							<h3 className="text-2xl font-bold">{edit ? "Editar post" : "Crear post"}</h3>
 							<p className="py-4 text-lg">{edit ? "Edita" : "Completa"} el siguiente formulario y guarda la información</p>
-							<PostForm userId={userData.id} post={currentPost}/>
+							<PostForm userId={userData._id} post={currentPost}/>
 						</div>
 					</div>
 				</>

@@ -24,7 +24,7 @@ test('renders list of post', async () => {
 	expect(screen.getByText(/Posts de/i)).toBeInTheDocument()
 	const postElement = await screen.findAllByTestId('postListItem')
 	await waitFor(() => {
-		expect(postElement).toHaveLength(10)
+		expect(postElement[0]).toBeInTheDocument()
 	})
 })
 
@@ -66,6 +66,10 @@ test("form should create item in list", async () => {
 	const bodyInputElement = screen.getByPlaceholderText('Body')
 	fireEvent.change(bodyInputElement, {target: {value: testBody}})
 
+	await waitFor(() => {
+		expect(screen.getByRole('option', {name: 'Diego Vasquez'})).toBeInTheDocument();
+	})
+
 	const buttonEl = screen.getByTestId('submit-button')
 	fireEvent.click(buttonEl)
 
@@ -76,11 +80,13 @@ test("form should create item in list", async () => {
 
 test("form should edit item in list", async () => {
 	renderWithRouter(<App/>, {route: '/1'})
-	const editEl = await screen.findByTestId('postEdit-2')
+	const editEl = await screen.findAllByTestId('postEdit')
+
+	const index = editEl.length - 1
 
 	const testTitle = "test title edit"
 
-	fireEvent.click(editEl)
+	fireEvent.click(editEl[index])
 	const titleInputElement = screen.getByPlaceholderText('Titulo')
 	fireEvent.change(titleInputElement, {target: {value: testTitle}})
 	const buttonEl = screen.getByTestId('submit-button')
@@ -92,11 +98,13 @@ test("form should edit item in list", async () => {
 
 test('delete item in list of post', async () => {
 	renderWithRouter(<App/>, {route: '/1'})
-	const deleteElement = await screen.findByTestId('postDelete-10')
+	const deleteElement = await screen.findAllByTestId('postDelete')
 
-	userEvent.click(deleteElement)
+	const index = deleteElement.length - 1
+
+	userEvent.click(deleteElement[index])
 
 	await waitFor(() => {
-		expect(screen.getAllByTestId('postListItem')).toHaveLength(9)
+		expect(deleteElement[index]).not.toBeInTheDocument()
 	})
 })
